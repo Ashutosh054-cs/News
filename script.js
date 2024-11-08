@@ -1,13 +1,19 @@
 document.getElementById("newsBtn").addEventListener("click", function () {
-  fetchNews("http://localhost:3000/news"); // Updated URL to match the server
+  fetchNews("top-headlines");
 });
 
 document.getElementById("affairsBtn").addEventListener("click", function () {
-  fetchNews("http://localhost:3000/news"); // Updated URL to match the server
+  fetchNews("everything");
 });
 
-function fetchNews(url) {
-  fetch(url)
+function fetchNews(endpoint) {
+  const apiKey = "b9c7161e06ae4437b7aed5e4f51c2582";
+  const url = `https://newsapi.org/v2/${endpoint}?country=in&apiKey=${apiKey}`;
+
+  const proxyUrl = "https://cors-anywhere.herokuapp.com/"; // Using a public proxy to bypass CORS
+  const finalUrl = proxyUrl + url;
+
+  fetch(finalUrl)
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // Log the response to see what you get
